@@ -21,6 +21,9 @@ public class BreadthFirst {
 	public static void recurBreadthFirst(GridField node) {
 		List<GridField> que = new ArrayList<GridField>();
 		List<GridField> history = new ArrayList<GridField>();
+		
+		// Mozda ova dva polja ne trebaju ako cu dodatai ih kao svojstvo fielda
+		// Stanja koja treba da se vide: RxC current node-a; Distance; Came from 
 		Map<GridField , Integer> distance = new HashMap<GridField, Integer>();
 		Map<GridField , GridField> cameFrom = new HashMap<GridField, GridField>();
 		boolean found = false;
@@ -37,21 +40,31 @@ public class BreadthFirst {
 			
 			history.add(currentNode);
 			
-			// Insert into field current node value
-			// higlightCurrentNode();
+			// TODO Insert into field current node value
+			// TODO higlightCurrentNode();
 			
-			for (GridField gridField : frontier) {
-				if(gridField.equals("GOAL NODE RowXColumn")) {
-					//highlightGoal
+			for (GridField nodeBeingChecked : frontier) {
+				if(nodeBeingChecked.equals("GOAL NODE RowXColumn")) {
+					//TODO highlightGoal
 					found = true;
 					
-					distance.put(gridField, distance.get(node) + 1);
-					cameFrom.put(gridField, node);
-					//createGoalRoad();
+					distance.put(nodeBeingChecked, distance.get(node) + 1);
+					cameFrom.put(nodeBeingChecked, node);
+					//TODO createGoalRoad();
+				} else {
+					if(!history.contains(nodeBeingChecked) && !que.contains(nodeBeingChecked)) {
+						que.add(nodeBeingChecked);
+						
+						distance.put(nodeBeingChecked, distance.get(node) + 1);
+						cameFrom.put(nodeBeingChecked, node);
+					}
 				}
 			}
 			
+			//TODO LET EACH NODE HAVE CURRENT DISTANCE AND CAME FROM AS PROPERTY FIELDS???
+		    //	   AND THEY UPDATE THEM FOR EACH WHILE CYCLE. They are always visible
 			
+			//TODO higlightVisitedNode(nodeBeingChecked);
 			
 			System.out.println(currentNode);
 		}
