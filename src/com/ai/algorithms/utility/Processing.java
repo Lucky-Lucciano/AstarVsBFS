@@ -2,10 +2,14 @@ package com.ai.algorithms.utility;
 
 import java.util.ArrayList;
 import java.util.List;
+//
+//import net.etfbl.ui.Grid.GridDisplay;
+//import net.etfbl.ui.elements.GridField;
+//import net.etfbl.ui.elements.GridField.FIELD_TYPE;
 
-import net.etfbl.ui.Grid.GridDisplay;
-import net.etfbl.ui.elements.GridField;
-import net.etfbl.ui.elements.GridField.FIELD_TYPE;
+import com.ai.algorithms.Grid.GridDisplay;
+import com.ai.algorithms.elements.GridField;
+import com.ai.algorithms.elements.GridField.FIELD_TYPE;
 
 public class Processing {
 	
@@ -44,5 +48,16 @@ public class Processing {
 		}
 		
 		return frontier;
+	}
+	
+	public static void createGoalRoad(GridField goalNode) {
+		GridField from  = goalNode.getCameFrom();
+		
+		System.out.println("Creating goal road - this: " + goalNode + " - from: " + from);
+		
+		if(from != null) {
+			GridTools.highlightGoalRoad(from);
+			createGoalRoad(from);
+		}
 	}
 }
