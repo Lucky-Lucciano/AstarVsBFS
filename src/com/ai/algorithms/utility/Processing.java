@@ -6,6 +6,7 @@ import java.util.List;
 //import net.etfbl.ui.Grid.GridDisplay;
 //import net.etfbl.ui.elements.GridField;
 //import net.etfbl.ui.elements.GridField.FIELD_TYPE;
+import java.util.Map;
 
 import com.ai.algorithms.Grid.GridDisplay;
 import com.ai.algorithms.elements.GridField;
@@ -19,28 +20,28 @@ public class Processing {
 		List<GridField> frontier = new ArrayList<GridField>();
 		GridField tempField;
 		
-		if((row-1) >= 0) {
+		if((row-1) >= 1) {
 			tempField = grid.getElement(row - 1, col);
 			if(!tempField.getType().equals(FIELD_TYPE.WALL)) {
 				frontier.add(tempField);
 			}
 		}
 		
-		if((col-1) >= 0) {
+		if((col-1) >= 1) {
 			tempField = grid.getElement(row, col-1);
 			if(!tempField.getType().equals(FIELD_TYPE.WALL)) {
 				frontier.add(tempField);
 			}
 		}
 		
-		if((row+1) < grid.getRows()) {
+		if((row+1) <= grid.getRows()) {
 			tempField = grid.getElement(row + 1, col);
 			if(!tempField.getType().equals(FIELD_TYPE.WALL)) {
 				frontier.add(tempField);
 			}
 		}
 		
-		if((col+1) < grid.getColumns()) {
+		if((col+1) <= grid.getColumns()) {
 			tempField = grid.getElement(row, col+1);
 			if(!tempField.getType().equals(FIELD_TYPE.WALL)) {
 				frontier.add(tempField);
@@ -58,6 +59,17 @@ public class Processing {
 		if(from != null) {
 			GridTools.highlightGoalRoad(from);
 			createGoalRoad(from);
+		}
+	}
+	
+	public static void createGoalRoadFromList(GridField goalNode, Map<GridField, GridField> cameFrom) {
+		GridField from  = cameFrom.get(goalNode);
+		
+		System.out.println("Creating goal road - this: " + goalNode + " - from: " + from);
+		
+		if(from != null) {
+			GridTools.highlightGoalRoad(from);
+			createGoalRoadFromList(from, cameFrom);
 		}
 	}
 }

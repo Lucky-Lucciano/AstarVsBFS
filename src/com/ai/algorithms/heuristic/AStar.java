@@ -1,5 +1,5 @@
 package com.ai.algorithms.heuristic;
 
-public class BestFirst {
-
+public class AStar {
+	
 }

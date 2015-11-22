@@ -20,6 +20,7 @@ public class GridTools {
 	}
 	
 	public static void highlightGoalRoad(GridField node) {
+		node.getRectangle().setStrokeWidth(3.5);
 		node.getRectangle().setStroke(Color.RED);
 	}
 }
