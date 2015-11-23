@@ -155,7 +155,6 @@ public class Grid extends Application {
 		fields.getChildren().add(btnBreadthFirst);
 		fields.getChildren().add(btnGreedyBestFirst);
 		
-		
 		BorderPane mainPanel = new BorderPane();
 		mainPanel.setCenter(gridDisplay.getDisplay());
 		mainPanel.setTop(fields);
