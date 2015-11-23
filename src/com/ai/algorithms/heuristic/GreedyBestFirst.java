@@ -9,6 +9,7 @@ import com.ai.algorithms.Grid.GridDisplay;
 import com.ai.algorithms.elements.GridField;
 import com.ai.algorithms.utility.GridTools;
 import com.ai.algorithms.utility.Heuristics;
+import com.ai.algorithms.utility.PriorityQueue;
 import com.ai.algorithms.utility.Processing;
 
 public class GreedyBestFirst {
@@ -16,56 +17,12 @@ public class GreedyBestFirst {
 	private static GridField goalNode;
 	private static PriorityQueue<GridField> frontier;
 	
-	// For mutli varialbe lists
-	public class Tuple<X, Y> {
-		public X node;
-		public Y prirority;
-		
-		public Tuple(X item, Y priority) {
-			this.node = item;
-			this.prirority = priority;
-		}
-	}
-	
-	public class PriorityQueue<T> {
-	    // I'm using an unsorted array for this example, but ideally this
-	    // would be a binary heap. Find a binary heap class:
-	    // * https://bitbucket.org/BlueRaja/high-speed-priority-queue-for-c/wiki/Home
-	    // * http://visualstudiomagazine.com/articles/2012/11/01/priority-queues-with-c.aspx
-	    // * http://xfleury.github.io/graphsearch.html
-	    // * http://stackoverflow.com/questions/102398/priority-queue-in-net
-	    
-	    private List<Tuple<T, Integer>> elements = new ArrayList<Tuple<T, Integer>>();
-	    
-	    public int size() {
-	        return elements.size();
-	    }
-	    
-	    public void enqueue(T item, Integer priority) {
-	    	elements.add(new Tuple<T, Integer>(item, priority));
-	    }
-
-	    public T dequeue() {
-	        int bestIndex = 0;
-
-	        for (int i = 0; i < elements.size(); i++) {
-	            if (elements.get(i).prirority < elements.get(bestIndex).prirority) {
-	                bestIndex = i;
-	            }
-	        }
-
-	        T bestItem = elements.get(bestIndex).node;
-	        elements.remove(bestIndex);
-	        return bestItem;
-	    }
-	}
-	
-	public GreedyBestFirst(GridDisplay startGrid, GridField startNode, GridField goal) {
+	public GreedyBestFirst(GridDisplay startGrid, GridField start, GridField goal) {
 		grid = startGrid;
 		goalNode = goal;
 		frontier = new PriorityQueue<GridField>();
 		
-		recurGreedyBestFirst(startNode);
+		recurGreedyBestFirst(start);
 	}
 	
 	public static void recurGreedyBestFirst(GridField startNode) {
@@ -91,7 +48,6 @@ public class GreedyBestFirst {
 //			history.add(currentNode);
 			
 			if(currentNode.equals(goalNode)) {
-				GridTools.highlightGoalNode(currentNode);
 //				GridTools.highlightVisitedNode(currentNode);
 				found = true;
 				
@@ -100,6 +56,8 @@ public class GreedyBestFirst {
 
 				System.out.println("GOAL NODE FOUND: " + currentNode);
 				Processing.createGoalRoadFromList(goalNode, cameFrom);
+				GridTools.highlightGoalNode(currentNode);
+				GridTools.highlightGoalRoad(currentNode);
 				return;
 			}
 			

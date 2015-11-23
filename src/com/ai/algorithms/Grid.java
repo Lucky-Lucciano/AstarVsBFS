@@ -124,6 +124,12 @@ public class Grid extends Application {
 		//Grid with rectangels
 		gridDisplay = new GridDisplay(10, 10);
 		
+		//Config
+		int GBFStartRow = 2;
+		int GBFStartCol = 2;
+		int GBFGoalRow = 10;
+		int GBFGoalCol = 6;
+		
 		// Polja u grafici za unos redova/kolona
 		TextField rowField = new TextField("10");
 		TextField columnField = new TextField("10");
@@ -141,7 +147,7 @@ public class Grid extends Application {
 		Button btnGreedyBestFirst = new Button("Start Greedy search");
 		btnGreedyBestFirst.setOnAction(e -> {
 			System.out.println("Starting Greedy best first....");
-			GreedyBestFirst gbf = new GreedyBestFirst(gridDisplay, gridDisplay.getElement(9, 3), gridDisplay.getElement(3, 8));
+			GreedyBestFirst gbf = new GreedyBestFirst(gridDisplay, gridDisplay.getElement(GBFStartRow, GBFStartRow), gridDisplay.getElement(GBFGoalRow, GBFGoalCol));
 		});
 		
 		//Funkcija koja se izvrsava kada tekstualno polje izgubi fokus
