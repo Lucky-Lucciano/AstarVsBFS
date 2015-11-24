@@ -1,6 +1,7 @@
 package com.ai.algorithms;
 
 import com.ai.algorithms.elements.GridField;
+import com.ai.algorithms.heuristic.GreedyBestFirst;
 import com.ai.algorithms.search.BreadthFirst;
 
 import javafx.application.Application;
@@ -26,7 +27,7 @@ public class Grid extends Application {
 	private GridDisplay gridDisplay;
 	
 	public class GridDisplay {
-		private static final double ELEMENT_SIZE = 100;
+		private static final double ELEMENT_SIZE = 50;
 		private static final double GAP = ELEMENT_SIZE/30;
 		
 		private TilePane tilePane = new TilePane();
@@ -42,7 +43,7 @@ public class Grid extends Application {
 			
 			this.nRows = nRows;
 			this.nCols = nCols;
-			board = new GridField[nRows][nCols];
+			board = new GridField[nRows + 1][nCols + 1];
 			
 			setColumns(nCols);
 			setRows(nRows);
@@ -51,7 +52,7 @@ public class Grid extends Application {
 		public void reGenerateFields(int newRows, int newColumns) {
 			this.nRows = newRows;
 			this.nCols = newColumns;
-			this.board = new GridField[newRows][newColumns];
+			this.board = new GridField[newRows + 1][newColumns + 1];
 			
 			setColumns(newColumns);
 			setRows(newRows);
@@ -87,12 +88,12 @@ public class Grid extends Application {
             StackPane stp;
             Text text;
             
-            for (int i = 0; i < nRows; i++) {
-                for (int j = 0; j < nCols; j++) {
+            for (int i = 1; i <= nRows; i++) {
+                for (int j = 1; j <= nCols; j++) {
                 	temp = createElement(i, j);
                 	
                 	text = new Text(i + "x" + j);
-                	text.setFont(Font.font ("Verdana", 20));
+                	text.setFont(Font.font ("Verdana", 16));
                 	text.setFill(Color.RED);
                 	
                 	stp = new StackPane();
@@ -121,11 +122,17 @@ public class Grid extends Application {
 		// TODO Auto-generated method stub
 		
 		//Grid with rectangels
-		gridDisplay = new GridDisplay(7, 7);
+		gridDisplay = new GridDisplay(10, 10);
+		
+		//Config
+		int GBFStartRow = 2;
+		int GBFStartCol = 2;
+		int GBFGoalRow = 10;
+		int GBFGoalCol = 6;
 		
 		// Polja u grafici za unos redova/kolona
-		TextField rowField = new TextField("5");
-		TextField columnField = new TextField("5");
+		TextField rowField = new TextField("10");
+		TextField columnField = new TextField("10");
 		Button btnGenerate = new Button("Generate fields");
 		btnGenerate.setOnAction(e -> {
 			System.out.println("Hi World 123");
@@ -137,6 +144,12 @@ public class Grid extends Application {
 			BreadthFirst.recurBreadthFirst(gridDisplay, gridDisplay.getElement(1, 2), gridDisplay.getElement(5, 5));
 		});
 		
+		Button btnGreedyBestFirst = new Button("Start Greedy search");
+		btnGreedyBestFirst.setOnAction(e -> {
+			System.out.println("Starting Greedy best first....");
+			GreedyBestFirst gbf = new GreedyBestFirst(gridDisplay, gridDisplay.getElement(GBFStartRow, GBFStartRow), gridDisplay.getElement(GBFGoalRow, GBFGoalCol));
+		});
+		
 		//Funkcija koja se izvrsava kada tekstualno polje izgubi fokus
 		//createTextFieldActions(rowField, columnField);
 		
@@ -146,7 +159,7 @@ public class Grid extends Application {
 		fields.getChildren().add(columnField);
 		fields.getChildren().add(btnGenerate);
 		fields.getChildren().add(btnBreadthFirst);
-		
+		fields.getChildren().add(btnGreedyBestFirst);
 		
 		BorderPane mainPanel = new BorderPane();
 		mainPanel.setCenter(gridDisplay.getDisplay());

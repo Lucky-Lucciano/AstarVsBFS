@@ -11,6 +11,7 @@ public class GridField {
 	private FIELD_TYPE type;
 	private Rectangle rectangle;
 	private int distance;
+	private int costSoFar;
 	private GridField cameFrom;
 	
 	
@@ -108,5 +109,12 @@ public class GridField {
 
 	public void setCameFrom(GridField cameFrom) {
 		this.cameFrom = cameFrom;
+	}
+	public int getCostSoFar() {
+		return costSoFar;
+	}
+
+	public void setCostSoFar(int costSoFar) {
+		this.costSoFar = costSoFar;
 	}
 }
