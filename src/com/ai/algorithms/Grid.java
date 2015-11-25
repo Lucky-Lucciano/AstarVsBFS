@@ -1,6 +1,7 @@
 package com.ai.algorithms;
 
 import com.ai.algorithms.elements.GridField;
+import com.ai.algorithms.heuristic.AStar;
 import com.ai.algorithms.heuristic.GreedyBestFirst;
 import com.ai.algorithms.search.BreadthFirst;
 
@@ -124,11 +125,17 @@ public class Grid extends Application {
 		//Grid with rectangels
 		gridDisplay = new GridDisplay(10, 10);
 		
-		//Config
+		//Config Greed Best First
 		int GBFStartRow = 2;
 		int GBFStartCol = 2;
 		int GBFGoalRow = 10;
 		int GBFGoalCol = 6;
+		
+		//Config Greed Best First
+		int ASStartRow = 2;
+		int ASStartCol = 2;
+		int ASGoalRow = 10;
+		int ASGoalCol = 6;
 		
 		// Polja u grafici za unos redova/kolona
 		TextField rowField = new TextField("10");
@@ -147,7 +154,14 @@ public class Grid extends Application {
 		Button btnGreedyBestFirst = new Button("Start Greedy search");
 		btnGreedyBestFirst.setOnAction(e -> {
 			System.out.println("Starting Greedy best first....");
-			GreedyBestFirst gbf = new GreedyBestFirst(gridDisplay, gridDisplay.getElement(GBFStartRow, GBFStartRow), gridDisplay.getElement(GBFGoalRow, GBFGoalCol));
+			GreedyBestFirst gbf = new GreedyBestFirst(gridDisplay, gridDisplay.getElement(GBFStartRow, GBFStartCol), gridDisplay.getElement(GBFGoalRow, GBFGoalCol));
+		});
+		
+		Button btnAStar = new Button("Start A* search");
+		btnAStar.setOnAction(e -> {
+			System.out.println("Starting A* search....");
+			AStar.run(gridDisplay, gridDisplay.getElement(ASStartRow, ASStartCol), gridDisplay.getElement(ASGoalRow, ASGoalCol));
+//			GreedyBestFirst gbf = new GreedyBestFirst(gridDisplay, gridDisplay.getElement(GBFStartRow, GBFStartCol), gridDisplay.getElement(GBFGoalRow, GBFGoalCol));
 		});
 		
 		//Funkcija koja se izvrsava kada tekstualno polje izgubi fokus
@@ -160,6 +174,7 @@ public class Grid extends Application {
 		fields.getChildren().add(btnGenerate);
 		fields.getChildren().add(btnBreadthFirst);
 		fields.getChildren().add(btnGreedyBestFirst);
+		fields.getChildren().add(btnAStar);
 		
 		BorderPane mainPanel = new BorderPane();
 		mainPanel.setCenter(gridDisplay.getDisplay());

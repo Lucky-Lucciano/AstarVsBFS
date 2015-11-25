@@ -12,32 +12,35 @@ public class GridField {
 	private Rectangle rectangle;
 	private int distance;
 	private int costSoFar;
+	private int cost;
 	private GridField cameFrom;
 	
 	
 	public enum FIELD_TYPE {
-		INITAL, WALL
+		INITAL, WALL, GRASS, WATER
 	}
 	
 	public GridField(int row, int col, double elementSize) {
 		this.row = row;
 		this.col = col;
+		this.cost = 1;
 		this.type = FIELD_TYPE.INITAL;
 		
 		Rectangle rectangle = new Rectangle(elementSize, elementSize);
         rectangle.setStroke(Color.ORANGE);
-        rectangle.setFill(Color.STEELBLUE);
+        rectangle.setFill(Color.BISQUE);
 		this.rectangle = rectangle;
 	}
 	
 	public GridField(int row, int col) {
 		this.row = row;
 		this.col = col;
+		this.cost = 1;
 		this.type = FIELD_TYPE.INITAL;
 		
-		Rectangle rectangle = new Rectangle(100, 100);
+		Rectangle rectangle = new Rectangle(50, 50);
         rectangle.setStroke(Color.ORANGE);
-        rectangle.setFill(Color.STEELBLUE);
+        rectangle.setFill(Color.BISQUE);
 		this.rectangle = rectangle;
 	}
 	
@@ -47,11 +50,21 @@ public class GridField {
             public void handle(MouseEvent event) {
                 System.out.println("mouse click detected! X:" + row + " - " + col + " | " + event.getSource());
                 if(type.equals(FIELD_TYPE.INITAL)) {
-                	rectangle.setFill(Color.BISQUE);
+                	rectangle.setFill(Color.GREY);
                 	type = FIELD_TYPE.WALL;
+                	cost = 100000;
                 } else if(type.equals(FIELD_TYPE.WALL)) {
-                	rectangle.setFill(Color.STEELBLUE);
+                	rectangle.setFill(Color.GREEN);
+                	type = FIELD_TYPE.GRASS;
+                	cost = 5;
+                } else if(type.equals(FIELD_TYPE.GRASS)) {
+                	rectangle.setFill(Color.DEEPSKYBLUE);
+                	type = FIELD_TYPE.WATER;
+                	cost = 10;
+                } else if(type.equals(FIELD_TYPE.WATER)) {
+                	rectangle.setFill(Color.BISQUE);
                 	type = FIELD_TYPE.INITAL;
+                	cost = 1;
                 }
             }
         });
@@ -116,5 +129,13 @@ public class GridField {
 
 	public void setCostSoFar(int costSoFar) {
 		this.costSoFar = costSoFar;
+	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
 	}
 }

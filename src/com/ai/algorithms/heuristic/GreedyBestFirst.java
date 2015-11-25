@@ -1,6 +1,5 @@
 package com.ai.algorithms.heuristic;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +65,7 @@ public class GreedyBestFirst {
 				
 				if(!cameFrom.containsKey(nodeBeingChecked)) {
 //					System.out.println("Manhattan: " + nodeBeingChecked.getRow() + " - " + goalNode.getRow() + "; " + nodeBeingChecked.getCol());
-					Integer priority = Heuristics.manhattanDistance(nodeBeingChecked.getRow(), nodeBeingChecked.getCol(), goalNode.getRow(), goalNode.getCol());
+					Integer priority = Heuristics.manhattanDistance(nodeBeingChecked, goalNode);
 //					cameFrom.add(nodeBeingChecked);
 					
 					frontier.enqueue(nodeBeingChecked, priority);
