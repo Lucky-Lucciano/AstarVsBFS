@@ -20,7 +20,7 @@ public class GridField {
 		INITAL, WALL, GRASS, WATER
 	}
 	
-	public GridField(int row, int col, double elementSize) {
+	public GridField(int row, int col, double elementSize, int type) {
 		this.row = row;
 		this.col = col;
 		this.cost = 1;
@@ -28,7 +28,14 @@ public class GridField {
 		
 		Rectangle rectangle = new Rectangle(elementSize, elementSize);
         rectangle.setStroke(Color.ORANGE);
-        rectangle.setFill(Color.BISQUE);
+        if(type == 0) {
+        	rectangle.setFill(Color.BISQUE);
+        } else if(type == 1) {
+        	rectangle.setFill(Color.GREEN);
+        } else if(type == 2) {
+        	rectangle.setFill(Color.GOLD);
+        }
+        
 		this.rectangle = rectangle;
 	}
 	
@@ -56,11 +63,11 @@ public class GridField {
                 } else if(type.equals(FIELD_TYPE.WALL)) {
                 	rectangle.setFill(Color.GREEN);
                 	type = FIELD_TYPE.GRASS;
-                	cost = 5;
+                	cost = 3;
                 } else if(type.equals(FIELD_TYPE.GRASS)) {
                 	rectangle.setFill(Color.DEEPSKYBLUE);
                 	type = FIELD_TYPE.WATER;
-                	cost = 10;
+                	cost = 5;
                 } else if(type.equals(FIELD_TYPE.WATER)) {
                 	rectangle.setFill(Color.BISQUE);
                 	type = FIELD_TYPE.INITAL;

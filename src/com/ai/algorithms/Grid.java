@@ -27,6 +27,18 @@ public class Grid extends Application {
 	
 	private GridDisplay gridDisplay;
 	
+	//Config Greed Best First
+	int GBFStartRow = 8;
+	int GBFStartCol = 1;
+	int GBFGoalRow = 2;
+	int GBFGoalCol = 10;
+	
+	//Config Greed Best First
+	int ASStartRow = 8;
+	int ASStartCol = 1;
+	int ASGoalRow = 2;
+	int ASGoalCol = 10;
+	
 	public class GridDisplay {
 		private static final double ELEMENT_SIZE = 50;
 		private static final double GAP = ELEMENT_SIZE/30;
@@ -107,7 +119,15 @@ public class Grid extends Application {
         }
         
         private GridField createElement(int xPos, int yPos) {
-            GridField field = new GridField(xPos, yPos, ELEMENT_SIZE);
+        	int type = 0;
+        	
+        	if(xPos == ASStartRow && yPos == ASStartCol) {
+        		type = 1;
+        	} else if(xPos == ASGoalRow && yPos == ASGoalCol) {
+        		type = 2;
+        	}
+        	
+            GridField field = new GridField(xPos, yPos, ELEMENT_SIZE, type);
             field.setEventHandler();
 
             return field;
@@ -124,19 +144,7 @@ public class Grid extends Application {
 		
 		//Grid with rectangels
 		gridDisplay = new GridDisplay(10, 10);
-		
-		//Config Greed Best First
-		int GBFStartRow = 2;
-		int GBFStartCol = 2;
-		int GBFGoalRow = 10;
-		int GBFGoalCol = 6;
-		
-		//Config Greed Best First
-		int ASStartRow = 2;
-		int ASStartCol = 2;
-		int ASGoalRow = 10;
-		int ASGoalCol = 6;
-		
+				
 		// Polja u grafici za unos redova/kolona
 		TextField rowField = new TextField("10");
 		TextField columnField = new TextField("10");
